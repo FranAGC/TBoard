@@ -82,6 +82,7 @@
     <string name="language_switch_key_behavior">Language switch key behavior</string>
     <!-- Option to show shortcut key to emoji palettes -->
     <string name="show_emoji_key">Emoji key</string>
+    <string name="show_auto_translate_key">Auto translate key</string>
     <!-- Units abbreviation for the duration (milliseconds) -->
     <string name="abbreviation_unit_milliseconds">%s ms</string>
     <!-- Units abbreviation for the duration (minutes) -->

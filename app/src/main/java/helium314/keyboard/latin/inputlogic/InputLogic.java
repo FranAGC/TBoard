@@ -828,6 +828,17 @@ public final class InputLogic {
                 // input logic has no business with IME switching.
             case KeyCode.EMOJI, KeyCode.TOGGLE_ONE_HANDED_MODE, KeyCode.SWITCH_ONE_HANDED_MODE:
                 break;
+            case KeyCode.AUTO_TRANSLATE:
+                // Reverse the text in the input
+                final CharSequence before = mConnection.getTextBeforeCursor(Integer.MAX_VALUE, 0);
+                final CharSequence after = mConnection.getTextAfterCursor(Integer.MAX_VALUE, 0);
+                if (before != null && after != null) {
+                    final String text = before.toString() + after.toString();
+                    final String reversed = new StringBuilder(text).reverse().toString();
+                    mConnection.setSelection(0, text.length());
+                    mConnection.commitText(reversed, 1);
+                }
+                break;
             case KeyCode.CAPS_LOCK:
                 if (KeyboardSwitcher.getInstance().getKeyboard() == null
                             || KeyboardSwitcher.getInstance().getKeyboard().mId.isAlphabetKeyboard()) {

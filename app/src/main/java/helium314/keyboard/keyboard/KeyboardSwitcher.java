@@ -158,6 +158,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
                 .setNumberRowInSymbolsEnabled(settingsValues.mShowsNumberRowInSymbols)
                 .setLanguageSwitchKeyEnabled(settingsValues.isLanguageSwitchKeyEnabled())
                 .setEmojiKeyEnabled(settingsValues.mShowsEmojiKey)
+                .setAutoTranslateKeyEnabled(settingsValues.mShowsAutoTranslateKey)
                 .setSplitLayoutEnabled(settingsValues.mIsSplitKeyboardEnabled)
                 .setOneHandedModeEnabled(oneHandedModeEnabled)
                 .setInternalAction(internalAction)
@@ -175,6 +176,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
                         .setNumberRowInSymbolsEnabled(settingsValues.mShowsNumberRowInSymbols)
                         .setLanguageSwitchKeyEnabled(settingsValues.isLanguageSwitchKeyEnabled())
                         .setEmojiKeyEnabled(settingsValues.mShowsEmojiKey)
+                        .setAutoTranslateKeyEnabled(settingsValues.mShowsAutoTranslateKey)
                         .setSplitLayoutEnabled(settingsValues.mIsSplitKeyboardEnabled)
                         .setOneHandedModeEnabled(oneHandedModeEnabled)
                         .build();

@@ -234,6 +234,7 @@ public final class Constants {
         case KeyCode.SPLIT_LAYOUT: return "splitLayout";
         case KeyCode.NUMPAD: return "numpad";
         case KeyCode.EMOJI_SEARCH: return "emojiSearch";
+        case KeyCode.AUTO_TRANSLATE: return "autoTranslate";
         default:
             if (code < CODE_SPACE) return String.format("\\u%02X", code);
             if (code < 0x100) return String.format("%c", code);

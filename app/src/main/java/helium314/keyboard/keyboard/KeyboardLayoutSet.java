@@ -90,6 +90,7 @@ public final class KeyboardLayoutSet {
         boolean mNumberRowInSymbols;
         boolean mLanguageSwitchKeyEnabled;
         boolean mEmojiKeyEnabled;
+        boolean mAutoTranslateKeyEnabled;
         boolean mOneHandedModeEnabled;
         RichInputMethodSubtype mSubtype;
         boolean mIsSpellChecker;
@@ -274,6 +275,11 @@ public final class KeyboardLayoutSet {
 
         public Builder setEmojiKeyEnabled(final boolean enabled) {
             mParams.mEmojiKeyEnabled = enabled;
+            return this;
+        }
+
+        public Builder setAutoTranslateKeyEnabled(final boolean enabled) {
+            mParams.mAutoTranslateKeyEnabled = enabled;
             return this;
         }
 

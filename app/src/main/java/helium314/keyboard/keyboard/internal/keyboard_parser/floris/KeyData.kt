@@ -194,6 +194,7 @@ data class VariationSelector(
  * Note that the conditions are checked in order as given below, and the first non-null AbstractKeyData is selected.
  *
  * @property emojiKeyEnabled The key data to use if [KeyboardId.mEmojiKeyEnabled] is true.
+ * @property autoTranslateKeyEnabled The key data to use if [KeyboardId.mAutoTranslateKeyEnabled] is true.
  * @property languageKeyEnabled The key data to use if [KeyboardId.mLanguageSwitchKeyEnabled] is true.
  * @property symbols The key data to use if [KeyboardId.mElementId] is [KeyboardId.ELEMENT_SYMBOLS].
  * @property moreSymbols The key data to use if [KeyboardId.mElementId] is [KeyboardId.ELEMENT_SYMBOLS_SHIFTED].
@@ -205,6 +206,7 @@ data class VariationSelector(
 @SerialName("keyboard_state_selector")
 class KeyboardStateSelector(
     val emojiKeyEnabled: AbstractKeyData? = null,
+    val autoTranslateKeyEnabled: AbstractKeyData? = null,
     val languageKeyEnabled: AbstractKeyData? = null,
     val symbols: AbstractKeyData? = null,
     val moreSymbols: AbstractKeyData? = null,
@@ -215,6 +217,8 @@ class KeyboardStateSelector(
     override fun compute(params: KeyboardParams): KeyData? {
         if (params.mId.mEmojiKeyEnabled)
             emojiKeyEnabled?.compute(params)?.let { return it }
+        if (params.mId.mAutoTranslateKeyEnabled)
+            autoTranslateKeyEnabled?.compute(params)?.let { return it }
         if (params.mId.mLanguageSwitchKeyEnabled)
             languageKeyEnabled?.compute(params)?.let { return it }
         if (params.mId.mElementId == KeyboardId.ELEMENT_SYMBOLS)

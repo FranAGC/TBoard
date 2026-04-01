@@ -79,6 +79,7 @@ public final class KeyboardId {
     public final boolean mNumberRowInSymbols;
     public final boolean mLanguageSwitchKeyEnabled;
     public final boolean mEmojiKeyEnabled;
+    public final boolean mAutoTranslateKeyEnabled;
     public final String mCustomActionLabel;
     public final boolean mHasShortcutKey;
     public final boolean mIsSplitLayout;
@@ -100,6 +101,7 @@ public final class KeyboardId {
         mNumberRowInSymbols = params.mNumberRowInSymbols;
         mLanguageSwitchKeyEnabled = params.mLanguageSwitchKeyEnabled;
         mEmojiKeyEnabled = params.mEmojiKeyEnabled;
+        mAutoTranslateKeyEnabled = params.mAutoTranslateKeyEnabled;
         mCustomActionLabel = (mEditorInfo.actionLabel != null)
                 ? mEditorInfo.actionLabel.toString() : null;
         mHasShortcutKey = params.mVoiceInputKeyEnabled;
@@ -123,6 +125,7 @@ public final class KeyboardId {
                 id.mNumberRowEnabled,
                 id.mLanguageSwitchKeyEnabled,
                 id.mEmojiKeyEnabled,
+                id.mAutoTranslateKeyEnabled,
                 id.isMultiLine(),
                 id.imeAction(),
                 id.mCustomActionLabel,
@@ -147,6 +150,7 @@ public final class KeyboardId {
                 && other.mNumberRowEnabled == mNumberRowEnabled
                 && other.mLanguageSwitchKeyEnabled == mLanguageSwitchKeyEnabled
                 && other.mEmojiKeyEnabled == mEmojiKeyEnabled
+                && other.mAutoTranslateKeyEnabled == mAutoTranslateKeyEnabled
                 && other.isMultiLine() == isMultiLine()
                 && other.imeAction() == imeAction()
                 && TextUtils.equals(other.mCustomActionLabel, mCustomActionLabel)
@@ -246,6 +250,7 @@ public final class KeyboardId {
                 (mNumberRowEnabled ? " numberRowEnabled" : ""),
                 (mLanguageSwitchKeyEnabled ? " languageSwitchKeyEnabled" : ""),
                 (mEmojiKeyEnabled ? " emojiKeyEnabled" : ""),
+                (mAutoTranslateKeyEnabled ? " autoTranslateKeyEnabled" : ""),
                 (isMultiLine() ? " isMultiLine" : ""),
                 (mIsSplitLayout ? " isSplitLayout" : ""),
                 (mInternalAction != null ? " internalAction=" + mInternalAction : ""),
