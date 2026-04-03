@@ -182,7 +182,6 @@ class KeyboardIconsSet private constructor() {
             NAME_RESIZE_ONEHANDED_KEY to        R.drawable.ic_arrow_horizontal,
             NAME_TOOLBAR_KEY to                 R.drawable.ic_arrow_right,
             NAME_BIN to                         R.drawable.ic_bin,
-            "auto_translate_key" to             R.drawable.ic_translate,
         ).apply {
             ToolbarKey.entries.forEach {
                 put(it.name.lowercase(Locale.US), when (it) {

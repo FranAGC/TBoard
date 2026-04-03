@@ -54,6 +54,10 @@ class KeyboardActionListenerImpl(private val latinIME: LatinIME, private val inp
     }
 
     override fun onLongPressKey(primaryCode: Int) {
+        if (primaryCode == KeyCode.AUTO_TRANSLATE) {
+            latinIME.showAutoTranslateLanguageDialog()
+            return
+        }
         metaOnLongPressKey(primaryCode)
         performHapticFeedback(HapticEvent.KEY_LONG_PRESS)
     }

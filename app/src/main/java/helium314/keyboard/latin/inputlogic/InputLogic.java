@@ -829,14 +829,35 @@ public final class InputLogic {
             case KeyCode.EMOJI, KeyCode.TOGGLE_ONE_HANDED_MODE, KeyCode.SWITCH_ONE_HANDED_MODE:
                 break;
             case KeyCode.AUTO_TRANSLATE:
-                // Reverse the text in the input
-                final CharSequence before = mConnection.getTextBeforeCursor(Integer.MAX_VALUE, 0);
-                final CharSequence after = mConnection.getTextAfterCursor(Integer.MAX_VALUE, 0);
-                if (before != null && after != null) {
-                    final String text = before.toString() + after.toString();
-                    final String reversed = new StringBuilder(text).reverse().toString();
-                    mConnection.setSelection(0, text.length());
-                    mConnection.commitText(reversed, 1);
+                final CharSequence b = mConnection.getTextBeforeCursor(Integer.MAX_VALUE, 0);
+                final CharSequence a = mConnection.getTextAfterCursor(Integer.MAX_VALUE, 0);
+                if (b != null && a != null) {
+                    final String text = b.toString() + a.toString();
+                    if (!text.isEmpty()) {
+                        final android.content.SharedPreferences prefs = helium314.keyboard.latin.utils.KtxKt.prefs(mLatinIME);
+                        final String apiKey = prefs.getString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_API_KEY, helium314.keyboard.latin.settings.Defaults.PREF_AUTO_TRANSLATE_API_KEY);
+                        final String serviceName = prefs.getString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_SERVICE, helium314.keyboard.latin.settings.Defaults.PREF_AUTO_TRANSLATE_SERVICE);
+                        final String languageName = prefs.getString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_NAME, "");
+
+                        if (languageName.isEmpty()) {
+                            android.widget.Toast.makeText(mLatinIME, "You must select a language first", android.widget.Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                        
+                        new Thread(() -> {
+                            helium314.keyboard.latin.utils.TranslationService service = helium314.keyboard.latin.utils.TranslatorServiceFactory.INSTANCE.getService(serviceName);
+                            String translated = service.translate(text, apiKey, languageName);
+                            handler.post(() -> {
+                                if (translated != null && !translated.isEmpty()) {
+                                    mConnection.setSelection(0, text.length());
+                                    mConnection.commitText("", 1);
+                                    mConnection.commitText(translated, 1);
+                                } else {
+                                    android.widget.Toast.makeText(mLatinIME, "No se pudo traducir, intenta de nuevo", android.widget.Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }).start();
+                    }
                 }
                 break;
             case KeyCode.CAPS_LOCK:

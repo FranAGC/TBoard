@@ -538,6 +538,7 @@ public class Key implements Comparable<Key> {
     }
 
     public final boolean isLongPressEnabled() {
+        if (mCode == helium314.keyboard.keyboard.internal.keyboard_parser.floris.KeyCode.AUTO_TRANSLATE) return true;
         // We need not start long press timer on the key which has activated shifted letter.
         return (mActionFlags & ACTION_FLAGS_ENABLE_LONG_PRESS) != 0
                 && (mLabelFlags & LABEL_FLAGS_SHIFTED_LETTER_ACTIVATED) == 0;

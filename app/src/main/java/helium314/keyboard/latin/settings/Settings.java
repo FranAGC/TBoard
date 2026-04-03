@@ -91,6 +91,10 @@ public final class Settings implements SharedPreferences.OnSharedPreferenceChang
     public static final String PREF_LANGUAGE_SWITCH_KEY = "language_switch_key";
     public static final String PREF_SHOW_EMOJI_KEY = "show_emoji_key";
     public static final String PREF_SHOW_AUTO_TRANSLATE_KEY = "show_auto_translate_key";
+    public static final String PREF_AUTO_TRANSLATE_API_KEY = "auto_translate_api_key";
+    public static final String PREF_AUTO_TRANSLATE_SERVICE = "auto_translate_service";
+    public static final String PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_NAME = "auto_translate_target_language_name";
+    public static final String PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_CODE = "auto_translate_target_language_code";
     public static final String PREF_VARIABLE_TOOLBAR_DIRECTION = "var_toolbar_direction";
     public static final String PREF_ADDITIONAL_SUBTYPES = "additional_subtypes";
     public static final String PREF_ENABLE_SPLIT_KEYBOARD = "split_keyboard";

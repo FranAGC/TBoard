@@ -75,6 +75,10 @@ fun PreferencesScreen(
         Settings.PREF_LANGUAGE_SWITCH_KEY,
         Settings.PREF_SHOW_EMOJI_KEY,
         Settings.PREF_SHOW_AUTO_TRANSLATE_KEY,
+        if (prefs.getBoolean(Settings.PREF_SHOW_AUTO_TRANSLATE_KEY, Defaults.PREF_SHOW_AUTO_TRANSLATE_KEY))
+            Settings.PREF_AUTO_TRANSLATE_SERVICE else null,
+        if (prefs.getBoolean(Settings.PREF_SHOW_AUTO_TRANSLATE_KEY, Defaults.PREF_SHOW_AUTO_TRANSLATE_KEY))
+            Settings.PREF_AUTO_TRANSLATE_API_KEY else null,
         Settings.PREF_REMOVE_REDUNDANT_POPUPS,
         R.string.settings_category_clipboard_history,
         Settings.PREF_ENABLE_CLIPBOARD_HISTORY,
@@ -159,6 +163,18 @@ fun createPreferencesSettings(context: Context) = listOf(
     },
     Setting(context, Settings.PREF_SHOW_AUTO_TRANSLATE_KEY, R.string.show_auto_translate_key) {
         SwitchPreference(it, Defaults.PREF_SHOW_AUTO_TRANSLATE_KEY) { KeyboardSwitcher.getInstance().reloadKeyboard() }
+    },
+    Setting(context, Settings.PREF_AUTO_TRANSLATE_SERVICE, R.string.auto_translate_service) {
+        ListPreference(
+            it,
+            listOf(
+                "Groq" to "groq"
+            ),
+            Defaults.PREF_AUTO_TRANSLATE_SERVICE
+        )
+    },
+    Setting(context, Settings.PREF_AUTO_TRANSLATE_API_KEY, R.string.auto_translate_api_key) {
+        helium314.keyboard.settings.preferences.TextInputPreference(it, Defaults.PREF_AUTO_TRANSLATE_API_KEY)
     },
     Setting(context, Settings.PREF_REMOVE_REDUNDANT_POPUPS,
         R.string.remove_redundant_popups, R.string.remove_redundant_popups_summary)

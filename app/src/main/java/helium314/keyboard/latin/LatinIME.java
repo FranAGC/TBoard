@@ -1348,6 +1348,56 @@ public class LatinIME extends InputMethodService implements
         return false;
     }
 
+    public void showAutoTranslateLanguageDialog() {
+        if (isShowingOptionDialog()) return;
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(helium314.keyboard.latin.utils.DialogUtilsKt.getPlatformDialogThemeContext(this));
+        builder.setTitle("Select translation target language");
+
+        helium314.keyboard.latin.utils.TranslationLanguage[] langs = helium314.keyboard.latin.utils.TranslationLanguage.values();
+        CharSequence[] items = new CharSequence[langs.length];
+        for (int i = 0; i < langs.length; i++) {
+            items[i] = langs[i].getDisplayName() + " (" + langs[i].getEnglishName() + ")";
+        }
+        
+        android.content.SharedPreferences prefs = helium314.keyboard.latin.utils.KtxKt.prefs(this);
+        String currentCode = prefs.getString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_CODE, "");
+        final int[] selected = new int[]{-1};
+        for (int i = 0; i < langs.length; i++) {
+            if (langs[i].getCode().equals(currentCode)) {
+                selected[0] = i;
+                break;
+            }
+        }
+
+        builder.setSingleChoiceItems(items, selected[0], (dialog, which) -> {
+            selected[0] = which;
+        });
+        
+        builder.setNegativeButton(helium314.keyboard.latin.R.string.dialog_close, (dialog, which) -> dialog.dismiss());
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            if (selected[0] != -1) {
+                helium314.keyboard.latin.utils.TranslationLanguage lang = langs[selected[0]];
+                prefs.edit()
+                    .putString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_NAME, lang.getEnglishName())
+                    .putString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_CODE, lang.getCode())
+                    .apply();
+                mKeyboardSwitcher.reloadKeyboard();
+            }
+            dialog.dismiss();
+        });
+        
+        mOptionsDialog = builder.create();
+        final android.view.Window window = mOptionsDialog.getWindow();
+        if (window != null && mKeyboardSwitcher.getMainKeyboardView() != null) {
+            final android.view.WindowManager.LayoutParams lp = window.getAttributes();
+            lp.token = mKeyboardSwitcher.getMainKeyboardView().getWindowToken();
+            lp.type = android.view.WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+            window.setAttributes(lp);
+            window.addFlags(android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
+        mOptionsDialog.show();
+    }
+
     private boolean isShowingOptionDialog() {
         return mOptionsDialog != null && mOptionsDialog.isShowing();
     }

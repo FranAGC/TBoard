@@ -1132,6 +1132,11 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             return;
         }
         sListener.onLongPressKey(key.getCode());
+        if (key.getCode() == helium314.keyboard.keyboard.internal.keyboard_parser.floris.KeyCode.AUTO_TRANSLATE) {
+            cancelKeyTracking();
+            sListener.onReleaseKey(key.getCode(), false);
+            return;
+        }
         if (key.hasNoPanelAutoPopupKey()) {
             cancelKeyTracking();
             final int popupKeyCode = key.getPopupKeys()[0].mCode;

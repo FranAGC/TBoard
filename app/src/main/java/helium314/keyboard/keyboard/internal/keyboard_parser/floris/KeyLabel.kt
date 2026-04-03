@@ -115,7 +115,11 @@ object KeyLabel {
             TAB -> "!icon/tab_key|!code/${KeyCode.TAB}"
             TIMESTAMP -> "⌚"
             EMOJI_SEARCH -> "!icon/search_key|!code/key_emoji_search"
-            AUTO_TRANSLATE -> "!icon/language_switch_key|!code/key_auto_translate"
+            AUTO_TRANSLATE -> {
+                val ctx = Settings.getCurrentContext()
+                val code = if (ctx != null) helium314.keyboard.latin.utils.DeviceProtectedUtils.getSharedPreferences(ctx).getString(Settings.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_CODE, "") ?: "" else ""
+                if (code.isNotEmpty()) code else "Tr"
+            }
             else -> if (label in toolbarKeyStrings.values)
                 "!icon/$label|!code/${getCodeForToolbarKey(ToolbarKey.valueOf(label.uppercase(Locale.US)))}"
             else label

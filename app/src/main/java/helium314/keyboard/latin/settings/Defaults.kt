@@ -75,6 +75,10 @@ object Defaults {
     const val PREF_LANGUAGE_SWITCH_KEY = "internal"
     const val PREF_SHOW_EMOJI_KEY = false
     const val PREF_SHOW_AUTO_TRANSLATE_KEY = false
+    const val PREF_AUTO_TRANSLATE_API_KEY = ""
+    const val PREF_AUTO_TRANSLATE_SERVICE = "groq"
+    const val PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_NAME = ""
+    const val PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_CODE = ""
     const val PREF_VARIABLE_TOOLBAR_DIRECTION = true
     const val PREF_ADDITIONAL_SUBTYPES = "de${Separators.SET}${ExtraValue.KEYBOARD_LAYOUT_SET}=MAIN:qwerty${Separators.SETS}" +
             "fr${Separators.SET}${ExtraValue.KEYBOARD_LAYOUT_SET}=MAIN:qwertz${Separators.SETS}" +
