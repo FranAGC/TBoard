@@ -79,6 +79,8 @@ fun PreferencesScreen(
             Settings.PREF_AUTO_TRANSLATE_SERVICE else null,
         if (prefs.getBoolean(Settings.PREF_SHOW_AUTO_TRANSLATE_KEY, Defaults.PREF_SHOW_AUTO_TRANSLATE_KEY))
             Settings.PREF_AUTO_TRANSLATE_API_KEY else null,
+        if (prefs.getBoolean(Settings.PREF_SHOW_AUTO_TRANSLATE_KEY, Defaults.PREF_SHOW_AUTO_TRANSLATE_KEY))
+            Settings.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_CODE else null,
         Settings.PREF_REMOVE_REDUNDANT_POPUPS,
         R.string.settings_category_clipboard_history,
         Settings.PREF_ENABLE_CLIPBOARD_HISTORY,
@@ -175,6 +177,24 @@ fun createPreferencesSettings(context: Context) = listOf(
     },
     Setting(context, Settings.PREF_AUTO_TRANSLATE_API_KEY, R.string.auto_translate_api_key) {
         helium314.keyboard.settings.preferences.TextInputPreference(it, Defaults.PREF_AUTO_TRANSLATE_API_KEY)
+    },
+    Setting(context, Settings.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_CODE, R.string.auto_translate_language) {
+        val prefs = LocalContext.current.prefs()
+        ListPreference(
+            it,
+            helium314.keyboard.latin.utils.TranslationLanguage.values().map { lang ->
+                "${lang.displayName} (${lang.englishName})" to lang.code
+            },
+            Defaults.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_CODE,
+            onChanged = { newCode ->
+                val lang = helium314.keyboard.latin.utils.TranslationLanguage.values().firstOrNull { l -> l.code == newCode }
+                if (lang != null) {
+                    prefs.edit().putString(Settings.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_NAME, lang.englishName).apply()
+                }
+                KeyboardLayoutSet.onSystemLocaleChanged()
+                KeyboardSwitcher.getInstance().reloadKeyboard()
+            }
+        )
     },
     Setting(context, Settings.PREF_REMOVE_REDUNDANT_POPUPS,
         R.string.remove_redundant_popups, R.string.remove_redundant_popups_summary)

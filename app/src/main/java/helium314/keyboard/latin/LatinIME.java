@@ -1381,6 +1381,7 @@ public class LatinIME extends InputMethodService implements
                     .putString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_NAME, lang.getEnglishName())
                     .putString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_CODE, lang.getCode())
                     .apply();
+                helium314.keyboard.keyboard.KeyboardLayoutSet.onSystemLocaleChanged();
                 mKeyboardSwitcher.reloadKeyboard();
             }
             dialog.dismiss();

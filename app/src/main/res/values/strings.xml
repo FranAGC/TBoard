@@ -83,6 +83,7 @@
     <!-- Option to show shortcut key to emoji palettes -->
     <string name="show_emoji_key">Emoji key</string>
     <string name="show_auto_translate_key">Auto translate key</string>
+    <string name="auto_translate_language">Language for Autotranslate</string>
     <string name="auto_translate_api_key">API key</string>
     <string name="auto_translate_service">Translation service</string>
     <!-- Units abbreviation for the duration (milliseconds) -->
