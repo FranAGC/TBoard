@@ -170,7 +170,8 @@ fun createPreferencesSettings(context: Context) = listOf(
         ListPreference(
             it,
             listOf(
-                "Groq" to "groq"
+                "Groq" to "groq",
+                "Gemini" to "gemini"
             ),
             Defaults.PREF_AUTO_TRANSLATE_SERVICE
         )
