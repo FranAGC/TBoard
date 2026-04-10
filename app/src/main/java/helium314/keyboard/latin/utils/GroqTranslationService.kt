@@ -52,11 +52,14 @@ class GroqTranslationService : TranslationService {
             body.put("temperature", 0.3)
             body.put("max_tokens", 500)
             
-            OutputStreamWriter(conn.outputStream).use { it.write(body.toString()) }
+            val payload = body.toString()
+            Log.d("GroqTranslationService", "Request Payload: $payload")
+            OutputStreamWriter(conn.outputStream).use { it.write(payload) }
             
             val responseCode = conn.responseCode
             if (responseCode == 200) {
                 val responseStr = conn.inputStream.bufferedReader().use { it.readText() }
+                Log.d("GroqTranslationService", "Response JSON: $responseStr")
                 val responseJson = JSONObject(responseStr)
                 val choices = responseJson.optJSONArray("choices")
                 if (choices != null && choices.length() > 0) {

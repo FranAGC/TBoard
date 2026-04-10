@@ -59,11 +59,14 @@ class GeminiTranslationService : TranslationService {
             configObj.put("maxOutputTokens", 500)
             body.put("generationConfig", configObj)
             
-            OutputStreamWriter(conn.outputStream).use { it.write(body.toString()) }
+            val payload = body.toString()
+            Log.d("GeminiTranslationService", "Request Payload: $payload")
+            OutputStreamWriter(conn.outputStream).use { it.write(payload) }
             
             val responseCode = conn.responseCode
             if (responseCode == 200) {
                 val responseStr = conn.inputStream.bufferedReader().use { it.readText() }
+                Log.d("GeminiTranslationService", "Response JSON: $responseStr")
                 val responseJson = JSONObject(responseStr)
                 val candidates = responseJson.optJSONArray("candidates")
                 if (candidates != null && candidates.length() > 0) {
