@@ -76,7 +76,7 @@ object Defaults {
     const val PREF_SHOW_EMOJI_KEY = false
     const val PREF_SHOW_AUTO_TRANSLATE_KEY = false
     const val PREF_AUTO_TRANSLATE_API_KEY = ""
-    const val PREF_AUTO_TRANSLATE_SERVICE = "groq"
+    const val PREF_AUTO_TRANSLATE_SERVICE = "gemini"
     const val PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_NAME = ""
     const val PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_CODE = ""
     const val PREF_VARIABLE_TOOLBAR_DIRECTION = true

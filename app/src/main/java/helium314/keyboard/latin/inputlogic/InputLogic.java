@@ -835,8 +835,14 @@ public final class InputLogic {
                     final String text = b.toString() + a.toString();
                     if (!text.isEmpty()) {
                         final android.content.SharedPreferences prefs = helium314.keyboard.latin.utils.KtxKt.prefs(mLatinIME);
-                        final String apiKey = prefs.getString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_API_KEY, helium314.keyboard.latin.settings.Defaults.PREF_AUTO_TRANSLATE_API_KEY);
+                        String apiKey = prefs.getString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_API_KEY, helium314.keyboard.latin.settings.Defaults.PREF_AUTO_TRANSLATE_API_KEY);
                         final String serviceName = prefs.getString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_SERVICE, helium314.keyboard.latin.settings.Defaults.PREF_AUTO_TRANSLATE_SERVICE);
+                        
+                        if ((apiKey == null || apiKey.isEmpty()) && "gemini".equals(serviceName)) {
+                            apiKey = helium314.keyboard.latin.BuildConfig.GEMINI_API_KEY;
+                        }
+                        final String finalApiKey = apiKey;
+                        
                         final String languageName = prefs.getString(helium314.keyboard.latin.settings.Settings.PREF_AUTO_TRANSLATE_TARGET_LANGUAGE_NAME, "");
 
                         if (languageName.isEmpty()) {
@@ -846,14 +852,14 @@ public final class InputLogic {
                         
                         new Thread(() -> {
                             helium314.keyboard.latin.utils.TranslationService service = helium314.keyboard.latin.utils.TranslatorServiceFactory.INSTANCE.getService(serviceName);
-                            String translated = service.translate(text, apiKey, languageName);
+                            String translated = service.translate(text, finalApiKey, languageName);
                             handler.post(() -> {
                                 if (translated != null && !translated.isEmpty()) {
                                     mConnection.setSelection(0, text.length());
                                     mConnection.commitText("", 1);
                                     mConnection.commitText(translated, 1);
                                 } else {
-                                    android.widget.Toast.makeText(mLatinIME, "No se pudo traducir, intenta de nuevo", android.widget.Toast.LENGTH_SHORT).show();
+                                    mLatinIME.showTranslationErrorDialog();
                                 }
                             });
                         }).start();

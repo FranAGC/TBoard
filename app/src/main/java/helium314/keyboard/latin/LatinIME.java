@@ -1403,6 +1403,24 @@ public class LatinIME extends InputMethodService implements
         return mOptionsDialog != null && mOptionsDialog.isShowing();
     }
 
+    public void showTranslationErrorDialog() {
+        if (isShowingOptionDialog()) return;
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(helium314.keyboard.latin.utils.DialogUtilsKt.getPlatformDialogThemeContext(this));
+        builder.setTitle("Error");
+        builder.setMessage("Translation error, please try again");
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss());
+        mOptionsDialog = builder.create();
+        final android.view.Window window = mOptionsDialog.getWindow();
+        if (window != null && mKeyboardSwitcher.getMainKeyboardView() != null) {
+            final android.view.WindowManager.LayoutParams lp = window.getAttributes();
+            lp.token = mKeyboardSwitcher.getMainKeyboardView().getWindowToken();
+            lp.type = android.view.WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+            window.setAttributes(lp);
+            window.addFlags(android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
+        mOptionsDialog.show();
+    }
+
     // called when language switch key is pressed (either the keyboard key, or long-press comma)
     public void switchToNextSubtype() {
         final boolean switchSubtype = mSettings.getCurrent().mLanguageSwitchKeyToOtherSubtypes;
